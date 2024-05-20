@@ -183,19 +183,17 @@ while True:
         user_choice = input("Enter the number of your choice: \n")
 
         if user_choice == '1':
-            ft.print_hourly_forecast(ft.get_hour_forecast(data['forecast']['forecastday'][0]['hour']), today_date)
+            ft.print_hourly_forecast(today['hourly'], today_date)
 
         elif user_choice == "2":
             if len(data['forecast']['forecastday']) > 1:
-                ft.print_hourly_forecast(
-                    ft.get_hour_forecast(data['forecast']['forecastday'][1]['hour']), tomorrow['daily']['date'])
+                ft.print_hourly_forecast(tomorrow['hourly'], tomorrow['daily']['date'])
             else:
                 print(f"Hourly data for tomorrow ({tomorrow['daily']['date']}) might not be available")
 
         elif user_choice == "3":
             if len(data['forecast']['forecastday']) > 2:
-                ft.print_hourly_forecast(ft.get_hour_forecast(data['forecast']['forecastday'][2]['hour']),
-                                         day_after_tomorrow['daily']['date'])
+                ft.print_hourly_forecast(day_after_tomorrow['hourly'], day_after_tomorrow['daily']['date'])
             else:
                 print(f"Hourly data for day after tomorrow {day_after_tomorrow['daily']['date']} might not be available")
 
