@@ -13,3 +13,4 @@ This is a weather application that retrieves real-time weather conditions, 3-day
 - The app uses the datetime library to adjust the output of the date.
 - The app uses the requests library to make an API call to OpenWeatherMap to get the current weather conditions and the five-days forecast
 - The app uses json library API response in in the form of json.
+
