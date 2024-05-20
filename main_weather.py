@@ -1,10 +1,10 @@
 import datetime
-import forecast
+import forecast as ft
 
 city_name = input('Enter city name: ')
 country_name = input('Enter country name: ')
 
-data = forecast.get_forcast_data(city_name, country_name)
+data = ft.get_forcast_data(city_name, country_name)
 
 today_date = datetime.date.today().strftime("%A %d %B %Y")
 
@@ -50,7 +50,7 @@ today = {
     # 'pressure_mb': 1015.0, 'precip_mm': 0.0, 'snow_cm': 0.0, 'humidity': 94, 'cloud': 67, 'feelslike_c': 10.2,
     # 'windchill_c': 10.2, 'heatindex_c': 10.8, 'dewpoint_c': 9.9, chance_of_rain': 0,'chance_of_snow': 0, 'vis_km': 2.0
     # 'gust_kph': 13.4, 'uv': 1.0
-    "hourly": forecast.get_hour_forecast(tday['hour'])  # today['hourly']['00'] = today 00:00
+    "hourly": ft.get_hour_forecast(tday['hour'])  # today['hourly']['00'] = today 00:00
 }
 
 trow = data['forecast']['forecastday'][1]
@@ -73,7 +73,7 @@ tomorrow = {
         "chance_of_snow": trow['day']['daily_chance_of_snow'],
         "uv_index": trow['day']['uv']
     },
-    'hourly': forecast.get_hour_forecast(trow['hour'])  # today['hourly']['00'] = today 00:00
+    'hourly': ft.get_hour_forecast(trow['hour'])  # today['hourly']['00'] = today 00:00
 }
 
 datrow = data['forecast']['forecastday'][2]  # Day after tomorrow
@@ -96,7 +96,7 @@ day_after_tomorrow = {
         "chance_of_snow": datrow['day']['daily_chance_of_snow'],
         "uv_index": datrow['day']['uv']
     },
-    'hourly': forecast.get_hour_forecast(trow['hour'])  # today['hourly']['00'] = today 00:00
+    'hourly': ft.get_hour_forecast(trow['hour'])  # today['hourly']['00'] = today 00:00
 }
 
 while True:
@@ -104,7 +104,8 @@ while True:
     print("2. Today forcast")
     print("3. Tomorrow forcast")
     print("4. Day After Tomorrow forcast")
-    print("5. Exit\n")
+    print("5. Hourly Forecast")
+    print("6. Exit\n")
 
     user_choice = input("Enter the number of your choice: \n")
 
@@ -166,6 +167,33 @@ while True:
               f'Wind: \n'
               # wind speed ot m/s v km/h - \t - 4 spaces
               f"\tSpeed: {day_after_tomorrow['daily']['maxwind_kph']}Km/h \n")
-    break
 
-print(today['daily'])
+    elif user_choice == "5":
+        print("\n1. Check Today's Hourly Forecast")
+        print("2. Check Tomorrow's Hourly Forecast")
+        print("3. Check Day After Tomorrow's Hourly Forecast")
+
+        user_choice = input("Enter the number of your choice: \n")
+
+        if user_choice == '1':
+            ft.print_hourly_forecast(ft.get_hour_forecast(data['forecast']['forecastday'][0]['hour']), today_date)
+
+        elif user_choice == "2":
+            if len(data['forecast']['forecastday']) > 1:
+                ft.print_hourly_forecast(
+                    ft.get_hour_forecast(data['forecast']['forecastday'][1]['hour']), tomorrow['daily']['date'])
+            else:
+                print(f"Hourly data for tomorrow ({tomorrow['daily']['date']}) might not be available")
+
+        elif user_choice == "3":
+            if len(data['forecast']['forecastday']) > 2:
+                ft.print_hourly_forecast(ft.get_hour_forecast(data['forecast']['forecastday'][2]['hour']),
+                                         day_after_tomorrow['daily']['date'])
+            else:
+                print(f"Hourly data for day after tomorrow {day_after_tomorrow['daily']['date']} might not be available")
+
+        else:
+            print("Invalid choice")
+
+    elif user_choice == "6":
+        break
