@@ -1,10 +1,17 @@
 import datetime
 import forecast as ft
 
-city_name = input('Enter city name: ')
-country_name = input('Enter country name: ')
+# HANDLE INCORECT INPUT
+while True:
+    city_name = input('Enter city name: ')
+    country_name = input('Enter country name: ')
 
-data = ft.get_forcast_data(city_name, country_name)
+    data = ft.get_forcast_data(city_name, country_name)
+
+    if data:
+        break
+    else:
+        print("Invalid city or country. Please try again.")
 
 today_date = datetime.date.today().strftime("%A %d %B %Y")
 
