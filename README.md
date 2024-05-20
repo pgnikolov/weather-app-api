@@ -1,4 +1,4 @@
-# Weather App
+# Weather App :earth_americas:	
 
 ## Get Real-time, 3-Day or hourly forcast with [WeatherAPI](https://www.weatherapi.com/)
 
@@ -6,7 +6,7 @@
 
 This is a weather application that retrieves real-time weather conditions, 3-day and hourly forcast for any city in the world. It utilizes the Weather API to fetch the data.
 
-## Features
+### Features
 
 - Enter country and city in the world and get the weather conditions.
 - The app uses the geopy library to determine the latitude and longitude for the city entered by the user.
@@ -14,3 +14,30 @@ This is a weather application that retrieves real-time weather conditions, 3-day
 - The app uses the requests library to make an API call to OpenWeatherMap to get the current weather conditions and the five-days forecast
 - The app uses json library API response in in the form of json.
 
+
+### Requirements
+
+- Python 3.x
+- Requests library
+- datetime
+- geopy
+
+### Installation
+
+1. Clone this repository
+```shell
+git clone https://github.com/your-username/weather-app-api.git
+```
+
+2. Install required libraries:
+```shell
+pip install requests
+pip install geopy
+pip install datetime
+```
+
+### Usage
+
+1. Obtain an API key :key: from [WeatherAPI](https://www.weatherapi.com/). 
+2. Replace api_key in *forecast.py* with your actual API key.
+3. Run the script:
