@@ -23,7 +23,7 @@ def get_forcast_data(city, country):
     querystring = {"q": f"{use_loc}", "days": "3"}
 
     headers = {
-        "X-RapidAPI-Key": "31cab704a2msh1af613df96dd45bp115431jsnd7745fec4db5",
+        "X-RapidAPI-Key": "{api_key}",
         "X-RapidAPI-Host": "weatherapi-com.p.rapidapi.com"
     }
 
