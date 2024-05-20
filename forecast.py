@@ -50,3 +50,14 @@ def get_hour_forecast(data: dict):
         hourly_data[hour] = forecast
 
     return hourly_data
+
+
+def print_hourly_forecast(hourly_data, date):
+    print(f"\nHourly Forecast for {date}:")
+    for hour, forecast in hourly_data.items():
+        print(f"{hour}:00")
+        print(f"\tCondition: {forecast['condition']['text']}")
+        print(f"\tTemperature: {forecast['temp_c']}°C")
+        print(f"\tFeels Like: {forecast['feelslike_c']}°C")
+        print(f"\tWind: {forecast['wind_kph']} Km/h")
+
