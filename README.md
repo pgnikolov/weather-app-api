@@ -88,6 +88,14 @@ Sunset: 08:48 PM
 Wind: 
 	Speed: 12.6Km/h
 ```
+* If the UV index is high the app gives a warning. For example:
+```
+UV Index: 7.0
+Warning: UV Index is high. Take precautions such as wearing sunscreen, a hat, and sunglasses,
+and reduce exposure to direct sunlight during midday hours (typically between 10 am and 4 pm).
+Apply sunscreen with SPF 30+ liberally and reapply every two hours,
+or more often if swimming or sweating. Wear sunglasses that block UVA and UVB rays.
+```
 * In "Hourly Forecast" you can select from 3 options:
 ```
 1. Check Today's Hourly Forecast
