@@ -117,7 +117,7 @@ while True:
     user_choice = input("Enter the number of your choice: \n")
 
     if user_choice == '1':
-        print(f'Current Weather at {city_name.capitalize()} for {today_date}: \n'
+        print(f'Current Weather at {city_name.capitalize()}: \n'
               f'Current condition: {realtime["condition"].capitalize()} \n'
               f'Current Temperature: {realtime["temp"]}°C \n'
               f'Temperature feels like: {realtime["feelslike"]}°C \n'
@@ -129,6 +129,9 @@ while True:
               f'\tSpeed: {realtime["wind_kph"]}Km/h \n'
               f'\tWind Gust: {realtime["wind_gust"]}Km/h \n'
               f'\tDirection: {realtime["wind_direction"]}\n')
+        if int(realtime["uv_index"]) >= 6:
+            print(f"UV Index: {realtime['uv_index']}")
+        ft.uv_warning(realtime["uv_index"])
 
     elif user_choice == "2":
 
@@ -144,6 +147,9 @@ while True:
               f'Wind: \n'
               # wind speed ot m/s v km/h - \t - 4 spaces
               f"\tSpeed: {today['daily']['maxwind_kph']}Km/h \n")
+        if int(today['daily']["uv_index"]) >= 6:
+            print(f"UV Index: {today['daily']['uv_index']}")
+        ft.uv_warning(today['daily']["uv_index"])
 
     elif user_choice == "3":
 
@@ -159,6 +165,9 @@ while True:
               f'Wind: \n'
               # wind speed ot m/s v km/h - \t - 4 spaces
               f"\tSpeed: {tomorrow['daily']['maxwind_kph']}Km/h \n")
+        if int(tomorrow['daily']["uv_index"]) >= 6:
+            print(f"UV Index: {tomorrow['daily']['uv_index']}")
+        ft.uv_warning(tomorrow['daily']["uv_index"])
 
     elif user_choice == "4":
 
@@ -174,6 +183,9 @@ while True:
               f'Wind: \n'
               # wind speed ot m/s v km/h - \t - 4 spaces
               f"\tSpeed: {day_after_tomorrow['daily']['maxwind_kph']}Km/h \n")
+        if int(day_after_tomorrow['daily']["uv_index"]) >= 6:
+            print(f"UV Index: {day_after_tomorrow['daily']['uv_index']}")
+        ft.uv_warning(day_after_tomorrow['daily']["uv_index"])
 
     elif user_choice == "5":
         print("\n1. Check Today's Hourly Forecast")
