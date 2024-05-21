@@ -95,4 +95,24 @@ Wind:
 3. Check Day After Tomorrow's Hourly Forecast
 Enter the number of your choice:
 ```
+* The output information about every hour looks like:
+```
+Hourly Forecast for Tuesday 21 May 2024:
+00:00
+	Condition: Partly Cloudy 
+	Temperature: 10.5°C
+	Feels Like: 9.9°C
+	Wind: 6.8 Km/h
+01:00
+	Condition: Partly Cloudy 
+	Temperature: 10.2°C
+	Feels Like: 9.3°C
+	Wind: 7.6 Km/h
+02:00
+	Condition: Mist
+	Temperature: 9.8°C
+	Feels Like: 9.0°C
+	Wind: 7.2 Km/h
+....
+```
 
