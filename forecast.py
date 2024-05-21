@@ -23,7 +23,7 @@ def get_forcast_data(city, country):
     querystring = {"q": f"{use_loc}", "days": "3"}
 
     headers = {
-        "X-RapidAPI-Key": "{api_key}",
+        "X-RapidAPI-Key": "31cab704a2msh1af613df96dd45bp115431jsnd7745fec4db5",
         "X-RapidAPI-Host": "weatherapi-com.p.rapidapi.com"
     }
 
@@ -61,3 +61,20 @@ def print_hourly_forecast(hourly_data, date):
         print(f"\tFeels Like: {forecast['feelslike_c']}°C")
         print(f"\tWind: {forecast['wind_kph']} Km/h")
 
+
+def uv_warning(uv_index):
+    if uv_index >= 11:
+        print("There is an extreme risk of harm from UV rays. Try to avoid sun exposure during peak sunlight\n"
+              "hours (typically between 10 am and 4 pm). If you must be outdoors, cover up as much skin as\n"
+              "possible with sun-protective clothing. Apply sunscreen with SPF 50+ liberally and reapply every\n"
+              "two hours, or more often if swimming or sweating. Wear sunglasses that block UVA and UVB rays.\n")
+    elif 9 <= uv_index < 11:
+        print("There is a very high risk of harm from UV rays. Limit time outdoors, especially during peak\n"
+              "sunlight hours (typically between 10 am and 4 pm).Cover up as much skin as possible\n"
+              "with sun-protective clothing. Apply sunscreen with SPF 50+ liberally and reapply every two hours\n,"
+              "or more often if swimming or sweating. Wear sunglasses that block UVA and UVB rays.\n")
+    elif 6 <= uv_index < 9:
+        print("Warning: UV Index is high. Take precautions such as wearing sunscreen, a hat, and sunglasses,\n"
+              "and reduce exposure to direct sunlight during midday hours (typically between 10 am and 4 pm).\n"
+              "Apply sunscreen with SPF 30+ liberally and reapply every two hours,\n"
+              "or more often if swimming or sweating. Wear sunglasses that block UVA and UVB rays.\n")
