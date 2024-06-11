@@ -1,12 +1,13 @@
 # Weather App :earth_americas:	
-![Picture](https://github.com/pgnikolov/weather-app-api/blob/main/weather-app-api-pic.jpg)
+<img src="https://github.com/pgnikolov/weather-app-api/blob/main/weather-app-api-pic.jpg" width="700" height="400"/>
+
 ## Get Real-time, 3-Day or hourly forcast with [WeatherAPI](https://www.weatherapi.com/)
 
 ![weatherapi_logo](https://github.com/pgnikolov/weather-app-api/assets/151896883/f200ace4-93dc-4819-bb7f-9c6f6204ed59)
 
 This is a weather application that retrieves real-time weather conditions, 3-day and hourly forcast for any city in the world. It utilizes the Weather API to fetch the data.
 
-### Features
+### Features 🛠️
 
 - Enter country and city in the world and get the weather conditions.
 - The app uses the geopy library to determine the latitude and longitude for the city entered by the user.
@@ -15,14 +16,14 @@ This is a weather application that retrieves real-time weather conditions, 3-day
 - The app uses json library API response in in the form of json.
 
 
-### Requirements
+### Requirements 📋
 
 - Python 3.x
 - Requests library
 - datetime
 - geopy
 
-### Installation
+### Installation ⚙️
 
 1. Clone this repository
 ```shell
@@ -124,11 +125,11 @@ Hourly Forecast for Tuesday 21 May 2024:
 ....
 ```
 
-### Contributing
+### Contributing 🤝
 Contributions are welcome! Please fork the repository and submit a pull request.
 
-### License
+### License 📝
 This project is licensed under the MIT License. See the LICENSE file for details.
 
-### Contact
+### Contact 📫
 For any questions or feedback, please contact [![Gmail](https://img.shields.io/badge/-Gmail-c14438?style=flat&logo=Gmail&logoColor=white)](mailto:pgnikolov@gmail.com)
