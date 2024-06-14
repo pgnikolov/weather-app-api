@@ -1,12 +1,92 @@
 import datetime
-import forecast as ft
+import requests
+import geopy.geocoders as geocoders
+
+
+def get_forcast_data(city, country):
+    # Combine city and country for geocoding
+    location_string = f"{city}, {country}"
+
+    locator = geocoders.Nominatim(user_agent="my_app")  # Replace with your app name
+
+    location = locator.geocode(location_string)
+
+    if not location:
+        print(f"Location not found for {location_string}")
+        return None
+
+    latitude = location.latitude
+    longitude = location.longitude
+    use_loc = f"{latitude},{longitude}"
+
+    url = "https://weatherapi-com.p.rapidapi.com/forecast.json"
+
+    querystring = {"q": f"{use_loc}", "days": "3"}
+
+    headers = {
+        "X-RapidAPI-Key": "{api_key}",
+        "X-RapidAPI-Host": "weatherapi-com.p.rapidapi.com"
+    }
+
+    r = requests.get(url, headers=headers, params=querystring)
+
+    data = r.json()
+
+    return data
+
+
+def get_hour_forecast(data: dict):
+
+    hourly_data = {}
+
+    for forecast in data:
+        # take the hour from the "time" string
+        hour = forecast['time'].split(' ')[1].split(':')[0]
+
+        # If the hour doesn't't exist as a key in the dictionary, create it
+        if hour not in hourly_data:
+            hourly_data[hour] = {}
+
+        # Update the hourly data with the current forecast
+        hourly_data[hour] = forecast
+
+    return hourly_data
+
+
+def print_hourly_forecast(hourly_data, date):
+    print(f"\nHourly Forecast for {date}:")
+    for hour, forecast in hourly_data.items():
+        print(f"{hour}:00")
+        print(f"\tCondition: {forecast['condition']['text']}")
+        print(f"\tTemperature: {forecast['temp_c']}°C")
+        print(f"\tFeels Like: {forecast['feelslike_c']}°C")
+        print(f"\tWind: {forecast['wind_kph']} Km/h")
+
+
+def uv_warning(uv_index):
+    if uv_index >= 11:
+        print("There is an extreme risk of harm from UV rays. Try to avoid sun exposure during peak sunlight\n"
+              "hours (typically between 10 am and 4 pm). If you must be outdoors, cover up as much skin as\n"
+              "possible with sun-protective clothing. Apply sunscreen with SPF 50+ liberally and reapply every\n"
+              "two hours, or more often if swimming or sweating. Wear sunglasses that block UVA and UVB rays.\n")
+    elif 9 <= uv_index < 11:
+        print("There is a very high risk of harm from UV rays. Limit time outdoors, especially during peak\n"
+              "sunlight hours (typically between 10 am and 4 pm).Cover up as much skin as possible\n"
+              "with sun-protective clothing. Apply sunscreen with SPF 50+ liberally and reapply every two hours\n,"
+              "or more often if swimming or sweating. Wear sunglasses that block UVA and UVB rays.\n")
+    elif 6 <= uv_index < 9:
+        print("Warning: UV Index is high. Take precautions such as wearing sunscreen, a hat, and sunglasses,\n"
+              "and reduce exposure to direct sunlight during midday hours (typically between 10 am and 4 pm).\n"
+              "Apply sunscreen with SPF 30+ liberally and reapply every two hours,\n"
+              "or more often if swimming or sweating. Wear sunglasses that block UVA and UVB rays.\n")
+
 
 # HANDLE INCORECT INPUT
 while True:
     city_name = input('Enter city name: ')
     country_name = input('Enter country name: ')
 
-    data = ft.get_forcast_data(city_name, country_name)
+    data = get_forcast_data(city_name, country_name)
 
     if data:
         break
@@ -57,7 +137,7 @@ today = {
     # 'pressure_mb': 1015.0, 'precip_mm': 0.0, 'snow_cm': 0.0, 'humidity': 94, 'cloud': 67, 'feelslike_c': 10.2,
     # 'windchill_c': 10.2, 'heatindex_c': 10.8, 'dewpoint_c': 9.9, chance_of_rain': 0,'chance_of_snow': 0, 'vis_km': 2.0
     # 'gust_kph': 13.4, 'uv': 1.0
-    "hourly": ft.get_hour_forecast(tday['hour'])  # today['hourly']['00'] = today 00:00
+    "hourly": get_hour_forecast(tday['hour'])  # today['hourly']['00'] = today 00:00
 }
 
 trow = data['forecast']['forecastday'][1]
@@ -80,7 +160,7 @@ tomorrow = {
         "chance_of_snow": trow['day']['daily_chance_of_snow'],
         "uv_index": trow['day']['uv']
     },
-    'hourly': ft.get_hour_forecast(trow['hour'])  # today['hourly']['00'] = today 00:00
+    'hourly': get_hour_forecast(trow['hour'])  # today['hourly']['00'] = today 00:00
 }
 
 datrow = data['forecast']['forecastday'][2]  # Day after tomorrow
@@ -103,7 +183,7 @@ day_after_tomorrow = {
         "chance_of_snow": datrow['day']['daily_chance_of_snow'],
         "uv_index": datrow['day']['uv']
     },
-    'hourly': ft.get_hour_forecast(trow['hour'])  # today['hourly']['00'] = today 00:00
+    'hourly': get_hour_forecast(trow['hour'])  # today['hourly']['00'] = today 00:00
 }
 
 while True:
@@ -131,7 +211,7 @@ while True:
               f'\tDirection: {realtime["wind_direction"]}\n')
         if int(realtime["uv_index"]) >= 6:
             print(f"UV Index: {realtime['uv_index']}")
-        ft.uv_warning(realtime["uv_index"])
+            uv_warning(realtime["uv_index"])
 
     elif user_choice == "2":
 
@@ -149,7 +229,7 @@ while True:
               f"\tSpeed: {today['daily']['maxwind_kph']}Km/h \n")
         if int(today['daily']["uv_index"]) >= 6:
             print(f"UV Index: {today['daily']['uv_index']}")
-        ft.uv_warning(today['daily']["uv_index"])
+            uv_warning(today['daily']["uv_index"])
 
     elif user_choice == "3":
 
@@ -167,7 +247,7 @@ while True:
               f"\tSpeed: {tomorrow['daily']['maxwind_kph']}Km/h \n")
         if int(tomorrow['daily']["uv_index"]) >= 6:
             print(f"UV Index: {tomorrow['daily']['uv_index']}")
-        ft.uv_warning(tomorrow['daily']["uv_index"])
+            uv_warning(tomorrow['daily']["uv_index"])
 
     elif user_choice == "4":
 
@@ -185,7 +265,7 @@ while True:
               f"\tSpeed: {day_after_tomorrow['daily']['maxwind_kph']}Km/h \n")
         if int(day_after_tomorrow['daily']["uv_index"]) >= 6:
             print(f"UV Index: {day_after_tomorrow['daily']['uv_index']}")
-        ft.uv_warning(day_after_tomorrow['daily']["uv_index"])
+            uv_warning(day_after_tomorrow['daily']["uv_index"])
 
     elif user_choice == "5":
         print("\n1. Check Today's Hourly Forecast")
@@ -195,17 +275,17 @@ while True:
         user_choice = input("Enter the number of your choice: \n")
 
         if user_choice == '1':
-            ft.print_hourly_forecast(today['hourly'], today_date)
+            print_hourly_forecast(today['hourly'], today_date)
 
         elif user_choice == "2":
             if len(data['forecast']['forecastday']) > 1:
-                ft.print_hourly_forecast(tomorrow['hourly'], tomorrow['daily']['date'])
+                print_hourly_forecast(tomorrow['hourly'], tomorrow['daily']['date'])
             else:
                 print(f"Hourly data for tomorrow ({tomorrow['daily']['date']}) might not be available")
 
         elif user_choice == "3":
             if len(data['forecast']['forecastday']) > 2:
-                ft.print_hourly_forecast(day_after_tomorrow['hourly'], day_after_tomorrow['daily']['date'])
+                print_hourly_forecast(day_after_tomorrow['hourly'], day_after_tomorrow['daily']['date'])
             else:
                 print(f"Hourly data for day after tomorrow {day_after_tomorrow['daily']['date']} might not be available")
 
