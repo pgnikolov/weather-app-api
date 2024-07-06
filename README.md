@@ -1,5 +1,5 @@
 # Weather App :earth_americas:	
-<img src="https://github.com/pgnikolov/weather-app-api/blob/main/weather-app-api-pic.jpg" width="720" height="420"/>
+![weather-2789613_640](https://github.com/pgnikolov/weather-app-api/assets/151896883/cb11857d-9403-4d62-a5bb-d15f30322d23)
 
 ## Get Real-time, 3-Day or hourly forcast with [WeatherAPI](https://www.weatherapi.com/)
 
