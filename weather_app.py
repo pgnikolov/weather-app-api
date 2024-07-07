@@ -1,5 +1,5 @@
 import datetime
-from waether_api import RapidAPIWeather
+from weather_api import RapidAPIWeather
 from weather_data import WeatherFetcher, WeatherDataProcessor
 from favourite_cities import FavouriteCities
 
