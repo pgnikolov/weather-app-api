@@ -43,7 +43,7 @@ pip install datetime
 2. Replace api_key in *forecast.py* with your actual API key.
 3. Run the script:
 ```shell
-python main_weather.py
+python main.py
 ```
 4. The application will ask for city and country:
 ```
