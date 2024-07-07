@@ -5,10 +5,29 @@ from favourite_cities import FavouriteCities
 
 
 class WeatherApp:
+    """
+    This script provides a command-line interface to interact with weather forecast data using the RapidAPI Weather API.
+    It allows users to:
+    1. Enter a new city and view its weather forecast.
+    2. Manage a list of favourite cities for quick access to their weather information.
+    3. Display current weather, daily forecasts, and hourly forecasts for selected cities.
+    4. Receive UV index warnings based on current conditions.
+    Usage:
+        Ensure you have a `.env` file in the project directory containing:
+        - RAPIDAPI_KEY: Your RapidAPI key for accessing the Weather API.
+        - RAPIDAPI_HOST: Hostname for the RapidAPI endpoint.
+    Dependencies:
+        - python-dotenv: For loading environment variables from the `.env` file.
+        - requests: For making HTTP requests to the RapidAPI Weather API.
+    """
     def __init__(self, data_processor):
         self.data_processor = data_processor
 
     def run(self):
+        """
+        Runs the main menu of the WeatherApp, allowing the user to enter a new city, view favourite cities,
+        remove a city from favourites, or exit the application.
+        """
         while True:
             print("\n1. Enter a new city")
             print("2. View favourite cities")
@@ -29,6 +48,10 @@ class WeatherApp:
                 print("Invalid choice. Please enter a number from 1 to 4.")
 
     def new_city_weather(self):
+        """
+        Prompts the user to enter a new city and country, fetches the weather data for that city,
+        and adds the city to the favourites list if the data is valid.
+        """
         city_name = input('Enter city name: ')
         country_name = input('Enter country name: ')
         data = self.data_processor.get_forecast_data(city_name, country_name)
@@ -40,6 +63,9 @@ class WeatherApp:
 
     @ staticmethod
     def view_favourite_cities():
+        """
+        Displays the list of favourite cities stored in the favourite cities list.
+        """
         cities = FavouriteCities.get_cities()
         if cities:
             print("\nFavourite Cities:")
@@ -49,6 +75,10 @@ class WeatherApp:
             print("\nNo favourite cities found.")
 
     def remove_favourite_city(self):
+        """
+        Prompts the user to select a city from the favourite cities list to remove.
+
+        """
         cities = FavouriteCities.get_cities()
         if cities:
             self.view_favourite_cities()
@@ -61,6 +91,12 @@ class WeatherApp:
             print("No favourite cities to remove.")
 
     def print_menu(self, city_name, data):
+        """
+            Displays the weather options menu for the user to check various weather forecasts.
+        Args:
+            city_name (str): The name of the city.
+            data (dict): The weather data for the city.
+        """
         while True:
             print("\n1. Check Current Weather")
             print("2. Check Today's Forecast")
@@ -88,6 +124,12 @@ class WeatherApp:
                 print("Invalid choice. Please enter a number from 1 to 6.")
 
     def show_current_weather(self, city_name, data):
+        """
+            Displays the current weather for the specified city.
+        Args:
+            city_name (str): The name of the city.
+            data (dict): The weather data for the city.
+        """
         current_data = {
             "temp": data['current']['temp_c'],
             "feelslike": data['current']['feelslike_c'],
@@ -119,6 +161,13 @@ class WeatherApp:
             self.uv_warning(current_data["uv_index"])
 
     def show_daily_forecast(self, city_name, data, day_index):
+        """
+            Displays the daily weather forecast for a specified day.
+        Args:
+            city_name (str): The name of the city.
+            data (dict): The weather data for the city.
+            day_index (int): The index of the day for the forecast (0 for today, 1 for tomorrow, etc.).
+        """
         forecast_day = data['forecast']['forecastday'][day_index]['day']
 
         print(f'\nWeather Forecast for {self.get_date(day_index)} in {city_name.capitalize()}:')
@@ -133,6 +182,12 @@ class WeatherApp:
             self.uv_warning(forecast_day["uv"])
 
     def show_hourly_forecast(self, city_name, data):
+        """
+            Displays the hourly weather forecast for the specified city.
+        Args:
+            city_name (str): The name of the city.
+            data (dict): The weather data for the city.
+        """
         hourly_data = self.data_processor.get_hourly_forecast(data)
 
         print(f'\nHourly Forecast for {self.get_date(0)} in {city_name.capitalize()}:')
@@ -146,6 +201,11 @@ class WeatherApp:
 
     @staticmethod
     def uv_warning(uv_index):
+        """
+            Prints a UV warning based on the UV index.
+        Args:
+            uv_index (int): The UV index.
+        """
         if uv_index >= 11:
             print("There is an extreme risk of harm from UV rays. Try to avoid sun exposure during peak sunlight "
                   "hours (typically between 10 am and 4 pm). If you must be outdoors, cover up as much skin as "
@@ -164,6 +224,13 @@ class WeatherApp:
 
     @staticmethod
     def get_date(day_offset):
+        """
+            Returns a formatted date string for the given day offset from today.
+        Args:
+            day_offset (int): The number of days from today.
+        Returns:
+            str: The formatted date string.
+        """
         return (datetime.date.today() + datetime.timedelta(days=day_offset)).strftime("%A %d %B %Y")
 
 
