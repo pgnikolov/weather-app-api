@@ -44,6 +44,7 @@ pip install -r requirements.txt
 ```
 
 4. Create a .env file in the root directory with the following content:
+    - Obtain an API key :key: from [WeatherAPI](https://www.weatherapi.com/).
     - Replace your_rapidapi_key with your actual RapidAPI key.
 ```bash
 RAPIDAPI_KEY=your_rapidapi_key
@@ -77,9 +78,7 @@ After entering a new city, you can select from the following weather options:
 4. ***Check Day After Tomorrow's Forecast***: Displays the weather forecast for the day after tomorrow.
 5. ***Check Hourly Forecast***: Displays the hourly weather forecast for the specified city.
 6. ***Exit***: Returns to the main menu.
-
-1. Obtain an API key :key: from [WeatherAPI](https://www.weatherapi.com/). 
-
+ 
 
 ## Contributing 🤝
 Contributions are welcome! Please fork the repository and submit a pull request.
